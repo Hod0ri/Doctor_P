@@ -15,16 +15,12 @@ import java.util.List;
 @Data
 @JsonNaming(PropertyNamingStrategies.UpperSnakeCaseStrategy.class)
 public class SearchResDTO {
-    private List<MultipartFile> image;
-    private String type;
-    private String family;
-    private Map<String, String > result;
-    private List<Doubt> doubt;
+    @JsonProperty(value="ko-KR")
+    private String ko;
+    private String symptom;
+    private String overview;
 
-    @Data
-    private class Doubt {
-        String type;
-        Float percent;
-        Desc description;
-    }
+    @JsonProperty(value="full_desc")
+    private String fullDesc;
+    private String reason;
 }

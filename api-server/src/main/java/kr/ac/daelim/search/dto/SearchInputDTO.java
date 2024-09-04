@@ -9,5 +9,4 @@ import org.springframework.web.multipart.MultipartFile;
 public class SearchInputDTO {
     private MultipartFile image;
     private String family;
-    private String type;
 }
