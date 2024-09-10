@@ -10,6 +10,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Builder
 @Data
@@ -25,6 +26,6 @@ public class SearchResDTO {
     private class Doubt {
         String type;
         Float percent;
-        Desc description;
+        kr.ac.daelim.search.dto.Description description;
     }
 }
