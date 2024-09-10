@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Disease {
-	private String id;
+public class DiseaseDTO {
+	private String family;
 	private Description description;
 }
