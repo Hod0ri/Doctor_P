@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("disease")
 public class DiseaseListController {
-	private DiseaseService service;
+	private final DiseaseService service;
 
 	@GetMapping()
 	public DiseaseList getDiseaseList(@RequestParam String family){
