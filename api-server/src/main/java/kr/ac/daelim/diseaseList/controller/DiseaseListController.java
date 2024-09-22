@@ -1,6 +1,6 @@
 package kr.ac.daelim.diseaseList.controller;
 
-import kr.ac.daelim.diseaseList.dto.DiseaseDTO;
+import kr.ac.daelim.diseaseList.dto.DiseaseListDTO;
 import kr.ac.daelim.diseaseList.service.DiseaseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class DiseaseListController {
 	}
 
 	@GetMapping()
-	public DiseaseDTO getDiseaseById(@RequestParam String id){
+	public DiseaseListDTO getDiseaseById(@RequestParam String id){
 		return service.getDiseaseById(id);
 	}
 }
