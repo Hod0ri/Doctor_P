@@ -1,8 +1,6 @@
 package kr.ac.daelim.search.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
@@ -16,16 +14,10 @@ import java.util.Map;
 @Data
 @JsonNaming(PropertyNamingStrategies.UpperSnakeCaseStrategy.class)
 public class SearchResDTO {
-    private List<MultipartFile> image;
+    private MultipartFile image;
     private String type;
     private String family;
-    private Map<String, String > result;
+    private Map<String, Double > result;
     private List<Doubt> doubt;
 
-    @Data
-    private class Doubt {
-        String type;
-        Float percent;
-        kr.ac.daelim.search.dto.Description description;
-    }
 }

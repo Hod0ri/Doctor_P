@@ -14,7 +14,7 @@ public class SearchController {
     private final SearchService service;
 
     @PostMapping("search")
-    public SearchResDTO imageSearch(SearchInputDTO input){
-        return service.search(input);
+    public SearchResDTO imageSearch(SearchInputDTO inputDTO){
+        return service.search(inputDTO);
     }
 }

@@ -11,6 +11,6 @@ import java.util.Map;
 public class PredictDTO {
     private String status;
     private String family;
-    private Map<String, String> result;
+    private Map<String, Double> result;
     private List<String> doubt;
 }
