@@ -10,5 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DiseaseRepo extends JpaRepository<Disease, String > {
 	List<Disease> findAllByFamily(String family);
-	Optional<Disease> findById(String id);
+
+	List<Disease> findByIdAndFamily(Iterable<String> ids, String family);
+
+	Optional<Disease> findByIdAndFamily(String id, String family);
 }
