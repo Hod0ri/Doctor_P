@@ -1,4 +1,4 @@
-package kr.ac.daelim.search.dto;
+package kr.ac.daelim.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -21,7 +21,6 @@ public class Description {
     @Column(name="koKR")
     @JsonProperty(value="ko-KR")
     private String ko;
-    private String symptom;
     private String overview;
 
     @JsonProperty(value="full_desc")

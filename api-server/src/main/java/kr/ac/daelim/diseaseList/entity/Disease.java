@@ -5,7 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import kr.ac.daelim.search.dto.Description;
+import kr.ac.daelim.common.dto.Description;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,9 +18,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Disease {
 	@Id
-	private String id;
+	private Integer id;
 	@JsonIgnore
 	private String family;
+	private String name;
 	@Embedded
 	private Description description;
 

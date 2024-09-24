@@ -12,7 +12,8 @@ import kr.ac.daelim.diseaseList.entity.Disease;
 public interface DiseaseRepo extends JpaRepository<Disease, String > {
 	List<Disease> findAllByFamily(String family);
 
-	List<Disease> findByFamilyAndIdIn(String family, Iterable<String> ids);
+	Optional<Disease> findByName(String name);
+	List<Disease> findByFamilyAndNameIn(String family, Iterable<String> ids);
 
-	Optional<Disease> findByIdAndFamily(String id, String family);
+	Optional<Disease> findByNameAndFamily(String id, String family);
 }
