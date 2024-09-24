@@ -8,12 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class WebClientConfig {
+public class WebAPIConfig {
     @Value("#{environment['ai.url']}")
     private String apiURL;
-
-    @Value("#{environment['ai.key']}")
-    private String apiKey;
 
     @Bean
     public WebClient webClientConfig(WebClient.Builder builder){
@@ -21,7 +18,6 @@ public class WebClientConfig {
                 .baseUrl(apiURL)
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_JPEG_VALUE);
-                    httpHeaders.add("API-KEY", apiKey);
                 })
                 .build();
     }

@@ -1,20 +1,21 @@
 package kr.ac.daelim.search.service;
 
-import kr.ac.daelim.diseaseList.dto.DiseaseListDTO;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import kr.ac.daelim.diseaseList.entity.Disease;
 import kr.ac.daelim.diseaseList.service.DiseaseService;
 import kr.ac.daelim.search.convertor.SearchConvertor;
 import kr.ac.daelim.search.dto.PredictDTO;
 import kr.ac.daelim.search.dto.SearchInputDTO;
 import kr.ac.daelim.search.dto.SearchResDTO;
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -24,15 +25,25 @@ public class SearchService {
     private final SearchConvertor convertor;
 
     public SearchResDTO search(SearchInputDTO dto){
-        var predictResult = predict(dto).block();
-        Map<String, Double> predictDisease = predictResult.getResult();
+		PredictDTO predictResult = null;
+		try {
+			predictResult = predict(dto).block();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		Map<String, Double> predictDisease = predictResult.getResult();
 
-        var resBuilder = SearchResDTO.builder()
-                .image(dto.getImage())
-                .family(dto.getFamily())
-                .result(predictDisease);
+		SearchResDTO.SearchResDTOBuilder resBuilder = null;
+		try {
+			resBuilder = SearchResDTO.builder()
+					.image(dto.getImage().getBytes().toString())
+					.family(dto.getFamily())
+					.result(predictDisease);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
-        if (predictDisease.isEmpty()){
+		if (predictDisease.isEmpty()){
             return resBuilder.doubt(null).build();
         }
 
@@ -47,10 +58,11 @@ public class SearchService {
         ).build();
     }
 
-    private Mono<PredictDTO> predict(SearchInputDTO inputDTO){
+    private Mono<PredictDTO> predict(SearchInputDTO inputDTO) throws IOException {
         return webClient.post()
-                .uri(inputDTO.getFamily())
-                .bodyValue(inputDTO.getImage())
+                .uri(inputDTO.getFamily() + "/")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(inputDTO.getImage().getBytes())
                 .retrieve()
                 .bodyToMono(PredictDTO.class);
     }
