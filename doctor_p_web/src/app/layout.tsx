@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${gaeguRegular.variable} ${gaeguBold.variable} antialiased`}
+        className={`${gaeguLight.variable} ${gaeguBold.variable} ${gaeguRegular.className} antialiased`}
       >
         {children}
       </body>
