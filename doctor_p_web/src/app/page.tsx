@@ -4,6 +4,7 @@ import drPetLogo from './public/images/DrPET_Logo.svg';
 import dogBotton from './public/images/Dr.PET_dogBotton.svg';
 import catBotton from './public/images/Dr.PET_catBotton.svg';
 import chatBotton from './public/images/Dr.PET_chat.svg';
+import chatDr from './public/images/chatDr.svg';
 import { useState } from 'react';
 import {
   XCircleIcon,
@@ -15,7 +16,7 @@ export default function Home() {
   const [isChatClicked, setIsChatClicked] = useState(false);
   return (
     <div className='flex justify-center w-full h-screen'>
-      <div className='relative flex justify-center w-full h-full border border-red-200'>
+      <div className='relative flex justify-center w-full h-full'>
         <Image
           // className='ml-[20px] mr-[5px]'
           className='w-fit h-fit'
@@ -29,10 +30,10 @@ export default function Home() {
         <div className='flex absolute top-[400px] space-x-[50px]'>
           <Link
             className='flex justify-center items-center w-[130px] h-[130px] rounded-full bg-[#F7D7D7] shadow-br-sm hover:cursor-pointer'
-            href='/pages/searchDog'
+            href={`/pages/search/dog`}
           >
             <Image
-              className='h-fit'
+              className='h-fit hover:w-[100px] hover:h-[100px]'
               src={dogBotton}
               alt='dogBotton'
               width={90}
@@ -41,10 +42,10 @@ export default function Home() {
           </Link>
           <Link
             className='flex justify-center items-center w-[130px] h-[130px] rounded-full bg-[#C9EAFD] shadow-br-sm hover:cursor-pointer'
-            href='/pages/searchCat'
+            href={`/pages/search/cat`}
           >
             <Image
-              className='h-fit'
+              className='h-fit hover:w-[100px] hover:h-[100px]'
               src={catBotton}
               alt='dogBotton'
               width={90}
@@ -72,17 +73,49 @@ export default function Home() {
           <div className='flex items-center justify-between px-5 w-full h-[50px] rounded-t-3xl bg-[#FFD7A3]'>
             <div className='flex space-x-2 items-center'>
               <div className='w-5 h-5 rounded-full bg-[#93EF97]'></div>
-              <div>Chat Dr.</div>
+              <div className='text-xl'>Chat Dr.</div>
             </div>
             <XCircleIcon
               className='w-6 h-6 hover:cursor-pointer text-[#867373]'
               onClick={() => setIsChatClicked(!isChatClicked)}
             ></XCircleIcon>
           </div>
-          <div className='w-full h-full'>챗박스</div>
+          <div className='w-full h-full px-3 py-5 space-y-5'>
+            <div className='flex space-x-2 mr-6'>
+              <div className='shrink-0'>
+                <Image
+                  src={chatDr}
+                  width={40}
+                  height={40}
+                  alt='chatDr'
+                  className='p-1 rounded-full bg-[#fefaf0] shadow-br-xs'
+                />
+              </div>
+              <div className='rounded-xl p-2 bg-[#F4F4F4] shadow-br-xs'>
+                메세지를 입력해주세요메세지를 입력해주세요메세지를
+                입력해주세요메세지를 입력해주세요메세지를 입력해주세요메세지를
+                입력해주세요
+              </div>
+            </div>
+            <div className='flex space-x-2 ml-6'>
+              <div className='rounded-xl p-2 bg-[#7ED1FF] shadow-br-xs'>
+                메세지를 입력해주세요메세지를 입력해주세요메세지를 입력해주세요
+              </div>
+              <div className='shrink-0'>
+                {/* <UserCircleIcon className='w-[50px] h-[50px] text-gray-200' /> */}
+                <Image
+                  src={catBotton}
+                  width={40}
+                  height={40}
+                  alt='catBotton'
+                  className='p-1 rounded-full bg-[#C9EAFD] shadow-br-xs'
+                />
+              </div>
+            </div>
+          </div>
           <div className='flex items-center px-5 space-x-2 w-full h-[50px] relative bottom-[50px] rounded-b-3xl bg-[#FFD7A3] shadow-br-sm'>
             <input
-              className='bg-[#FFD7A3] w-full h-fit'
+              className='bg-[#FFD7A3] w-full h-fit text-lg'
               placeholder='Send a message...'
             ></input>
             <ChatBubbleLeftRightIcon className='w-6 h-6 hover:cursor-pointer text-[#867373]'></ChatBubbleLeftRightIcon>
