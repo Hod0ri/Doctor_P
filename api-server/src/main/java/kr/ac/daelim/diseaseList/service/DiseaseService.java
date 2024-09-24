@@ -1,15 +1,15 @@
 package kr.ac.daelim.diseaseList.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import kr.ac.daelim.diseaseList.convertor.DiseaseConvertor;
+import kr.ac.daelim.diseaseList.dto.DiseaseList;
 import kr.ac.daelim.diseaseList.dto.DiseaseListDTO;
 import kr.ac.daelim.diseaseList.entity.Disease;
 import kr.ac.daelim.diseaseList.repository.DiseaseRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import kr.ac.daelim.diseaseList.dto.DiseaseList;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -33,6 +33,6 @@ public class DiseaseService {
 	}
 
 	public List<Disease> getDiseaseListByIdAndFamily(Iterable<String> ids, String family){
-		return repo.findByIdAndFamily(ids, family);
+		return repo.findByFamilyAndIdIn(family, ids);
 	}
 }
