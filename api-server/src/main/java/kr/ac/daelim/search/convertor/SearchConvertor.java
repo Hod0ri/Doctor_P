@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class SearchConvertor {
     public Doubt toDoubt(Disease entity, Double percent){
         return Doubt.builder()
+                .id(entity.getName())
                 .type(entity.getFamily())
                 .percent(percent)
                 .description(entity.getDescription())

@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Builder
 @Data
-@JsonNaming(PropertyNamingStrategies.UpperSnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SearchResDTO {
     private String  image;
     private String type;

@@ -47,12 +47,12 @@ public class SearchService {
             return resBuilder.doubt(null).build();
         }
 
-        List<Disease> diseaseList = diseaseService.getDiseaseListByIdAndFamily(predictDisease.keySet(),
+        List<Disease> diseaseList = diseaseService.getDiseaseListByNameAndFamily(predictDisease.keySet(),
                 dto.getFamily());
 
         return resBuilder.doubt(
                 diseaseList.stream()
-                        .map(disease -> convertor.toDoubt(disease, predictDisease.get(disease.getId()))
+                        .map(disease -> convertor.toDoubt(disease, predictDisease.get(disease.getName()))
                         )
                         .toList()
         ).build();
