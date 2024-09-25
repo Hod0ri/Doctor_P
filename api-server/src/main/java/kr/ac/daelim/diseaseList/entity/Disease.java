@@ -1,10 +1,7 @@
 package kr.ac.daelim.diseaseList.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import kr.ac.daelim.common.dto.Description;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Disease {
 	@Id
-	private Integer id;
+	@JsonIgnore
+	private Long id;
 	@JsonIgnore
 	private String family;
 	private String name;
+	private String image;
 	@Embedded
 	private Description description;
 

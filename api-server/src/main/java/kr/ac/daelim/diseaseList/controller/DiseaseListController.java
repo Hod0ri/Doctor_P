@@ -1,12 +1,12 @@
 package kr.ac.daelim.diseaseList.controller;
 
+import kr.ac.daelim.diseaseList.dto.DiseaseInfo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.ac.daelim.diseaseList.dto.DiseaseList;
-import kr.ac.daelim.diseaseList.dto.DiseaseListDTO;
 import kr.ac.daelim.diseaseList.service.DiseaseService;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,7 @@ public class DiseaseListController {
 	}
 
 	@GetMapping("info")
-	public DiseaseListDTO getDiseaseById(@RequestParam String family, @RequestParam String id){
-		return service.getDiseaseById(id);
+	public DiseaseInfo getDiseaseById(@RequestParam String family, @RequestParam String id){
+		return service.getDiseaseByNameAndFamily(id, family);
 	}
 }
