@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import kr.ac.daelim.diseaseList.entity.Disease;
 
 @Repository
-public interface DiseaseRepo extends JpaRepository<Disease, String > {
+public interface DiseaseRepo extends JpaRepository<Disease, Long > {
 	List<Disease> findAllByFamily(String family);
 
 	Optional<Disease> findByName(String name);
-	List<Disease> findByFamilyAndNameIn(String family, Iterable<String> ids);
+	List<Disease> findByNameInAndFamily(Iterable<String> name, String family);
 
-	Optional<Disease> findByNameAndFamily(String id, String family);
+	Optional<Disease> findByNameAndFamily(String name, String family);
 }
