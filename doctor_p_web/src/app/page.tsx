@@ -18,14 +18,12 @@ export default function Home() {
     <div className='flex justify-center w-full h-screen'>
       <div className='relative flex justify-center w-full h-full'>
         <Image
-          // className='ml-[20px] mr-[5px]'
           className='w-fit h-fit'
           src={drPetLogo}
           width={600}
           height={600}
-          // fill
           alt='Doctor.PET logo'
-          // sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw'
+          priority
         />
         <div className='flex absolute top-[400px] space-x-[50px]'>
           <Link
@@ -92,14 +90,12 @@ export default function Home() {
                 />
               </div>
               <div className='rounded-xl p-2 bg-[#F4F4F4] shadow-br-xs'>
-                메세지를 입력해주세요메세지를 입력해주세요메세지를
-                입력해주세요메세지를 입력해주세요메세지를 입력해주세요메세지를
-                입력해주세요
+                Chat Dr.입니다. 궁금하신 내용을 말씀해주세요.
               </div>
             </div>
             <div className='flex space-x-2 ml-6'>
               <div className='rounded-xl p-2 bg-[#7ED1FF] shadow-br-xs'>
-                메세지를 입력해주세요메세지를 입력해주세요메세지를 입력해주세요
+                chatgpt api 요청 비용으로 인해 챗봇 서비스 이용이 불가합니다.
               </div>
               <div className='shrink-0'>
                 {/* <UserCircleIcon className='w-[50px] h-[50px] text-gray-200' /> */}
