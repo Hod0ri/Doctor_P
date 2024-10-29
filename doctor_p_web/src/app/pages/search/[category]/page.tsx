@@ -16,7 +16,6 @@ axios.defaults.baseURL = 'http://158.247.250.204:8080';
 
 const Page = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const param = useParams<{ category: string }>();
   const [imageFile, setImageFile] = useState(undefined);
   const [isSpoilerClicked, setIsSpoilerClicked] = useState(false);

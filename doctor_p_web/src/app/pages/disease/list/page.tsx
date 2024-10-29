@@ -80,7 +80,7 @@ const Page = () => {
           </thead>
           <tbody>
             {diseaseList &&
-              diseaseList.map((e, i) => {
+              diseaseList.map((e: any, i: number) => {
                 return (
                   <tr
                     className='text-center border-b border-slate-300 hover:cursor-pointer hover:bg-[#f7f2e6] hover:font-gaeguBold'
