@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { useParams, useRouter, usePathname } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import dogEyeSample from '../../../public/images/dogEyeSample.png';
 import searchImage from '../../../public/images/Dr.PET_searchImage.svg';
 import drPET_Logo from '../../../public/images/DrPET_Logo.svg';
@@ -12,12 +12,13 @@ import {
 } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import { useData, useImageContext } from '@/app/context/DataContext';
-axios.defaults.baseURL = 'http://158.247.250.204:8080';
+// axios.defaults.baseURL = 'http://158.247.250.204:8080';
+axios.defaults.baseURL = 'http://158.247.222.166:8080';
 
 const Page = () => {
   const router = useRouter();
   const param = useParams<{ category: string }>();
-  const [imageFile, setImageFile] = useState(undefined);
+  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [isSpoilerClicked, setIsSpoilerClicked] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const { setData } = useData();
@@ -25,22 +26,24 @@ const Page = () => {
   const handleDragEnter = () => setIsActive(true);
   const handleDragLeave = () => setIsActive(false);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageData(reader.result as string); // 이미지 데이터를 컨텍스트에 저장
-      };
-      reader.readAsDataURL(e);
-    }
+  if (!setData) {
+    console.error('setData is null');
+    return null; // 또는 다른 처리를 하세요.
+  }
+  const handleImageChange = (e: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageData(reader.result as string); // 이미지 데이터를 컨텍스트에 저장
+    };
+    reader.readAsDataURL(e);
   };
 
-  const handleDragOver = (e: any) => {
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const hadleDrop = (e: any) => {
+  const hadleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -69,15 +72,15 @@ const Page = () => {
             <div className='truncate line-clamp-1'>
               <div className='flex'>
                 <p className='font-gaeguBold'>파일명 : &nbsp;</p>
-                <p>"{imageFile.name}"</p>
+                <p>{`"${imageFile.name}"`}</p>
               </div>
               <div className='flex'>
                 <p className='font-gaeguBold'>파일 사이즈 :&nbsp;</p>
-                <p>"{imageFile.size}"</p>
+                <p>{`"${imageFile.size}"`}</p>
               </div>
               <div className='flex'>
                 <p className='font-gaeguBold'>파일 타입 :&nbsp;</p>
-                <p>"{imageFile.type}"</p>
+                <p>{`"${imageFile.type}"`}</p>
               </div>
             </div>
           </div>
@@ -195,7 +198,6 @@ const Page = () => {
                       onDragLeave={() => {
                         setIsActive(true);
                       }}
-                      onDragOver={handleDragOver}
                     />
 
                     <div>
@@ -213,9 +215,12 @@ const Page = () => {
                         multiple={false}
                         className='hidden'
                         value={imageFile}
-                        onChange={(e) => {
-                          setImageFile(e?.target?.files[0]);
-                          handleImageChange(e?.target?.files[0]);
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          const selectedFile = e.target.files?.[0];
+                          if (selectedFile) {
+                            setImageFile(selectedFile);
+                            handleImageChange(selectedFile);
+                          }
                         }}
                       />
                     </div>

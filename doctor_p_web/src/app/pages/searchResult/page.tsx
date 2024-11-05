@@ -10,31 +10,57 @@ import axios from 'axios';
 import { useData } from '@/app/context/DataContext';
 import Link from 'next/link';
 import { useImageContext } from '@/app/context/DataContext';
-axios.defaults.baseURL = 'http://158.247.250.204:8080';
+// axios.defaults.baseURL = 'http://158.247.250.204:8080';
+axios.defaults.baseURL = 'http://158.247.222.166:8080';
+interface DiseaseData {
+  family: string;
+  doubt: {
+    id: string;
+    description: {
+      'ko-KR': string;
+      overview: string;
+    };
+    percent: string;
+  }[];
+}
+
+// interface UseDataResponse {
+//   data: DiseaseData | null; // 여기에 반환할 데이터 타입을 명시합니다.
+// }
 
 const Page = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { data } = useData();
+  const { data } = useData() as { data: DiseaseData | null };
+  // const { data } = useData() as UseDataResponse;
   const { imageData } = useImageContext();
 
   useEffect(() => {
     const isReload = sessionStorage.getItem('isReloaded');
     if (!data) {
       router.replace('/');
+      return;
     }
     if (pathname === '/restricted-page') {
       router.replace('/');
+      return;
     }
-    if (isReload) {
-      // 새로고침된 경우 메인 페이지로 리다이렉트
-      sessionStorage.removeItem('isReloaded');
-      router.replace('/');
-    } else {
-      // 새로고침이 아닌 첫 진입 시, 리로드 상태를 설정
-      sessionStorage.setItem('isReloaded', 'true');
-    }
-  }, [router, pathname]);
+    // if (isReload) {
+    //   // 새로고침된 경우 메인 페이지로 리다이렉트
+    //   sessionStorage.removeItem('isReloaded');
+    //   router.replace('/');
+    //   return;
+    // } else {
+    //   // 새로고침이 아닌 첫 진입 시, 리로드 상태를 설정
+    //   sessionStorage.setItem('isReloaded', 'true');
+    // }
+  }, [router, pathname, data]);
+  if (!data) {
+    return null; // 데이터가 없을 때 렌더링 중단
+  }
+  if (!data) {
+    return <div>로딩중... 잠시만 기다려주세요</div>;
+  }
   return (
     <div className='flex justify-center items-center w-full h-screen'>
       <div
@@ -93,47 +119,46 @@ const Page = () => {
 
             <div className='flex flex-col'>
               <div className='flex flex-col space-y-4 py-4 my-4 w-[380px] h-fit border-l-4 border-black'>
-                {data
-                  ? data.doubt.map((e: any, i: number) => {
+                {data.doubt && data.doubt.length > 0 ? (
+                  data.doubt
+                    .filter((e, i: number) => i <= 5)
+                    .map((e, i: number) => {
                       const width = `${Math.round(
                         300 * parseFloat(e.percent)
                       )}px`;
-                      if (i <= 5) {
-                        if (i === 0) {
-                          return (
-                            <div
-                              style={{ width: `${width}` }}
-                              className='h-[25px] pl-1 bg-[#B48282] flex items-center justify-between'
-                              key={i}
-                            >
-                              <p className='shrink-0'>
-                                {e.description['ko-KR']}
-                              </p>
-                              <Image
-                                src={dogFootPrint}
-                                width={25}
-                                height={25}
-                                alt='dogFootPrint'
-                                className='pr-1'
-                              />
-                            </div>
-                          );
-                        } else {
-                          return (
-                            <div
-                              style={{ width: `${width}` }}
-                              className='h-[25px] pl-1 bg-[#B48282] flex items-center'
-                              key={i}
-                            >
-                              <p className='shrink-0'>
-                                {e.description['ko-KR']}
-                              </p>
-                            </div>
-                          );
-                        }
+
+                      if (i === 0) {
+                        return (
+                          <div
+                            style={{ width: `${width}` }}
+                            className='h-[25px] pl-1 bg-[#B48282] flex items-center justify-between'
+                            key={i}
+                          >
+                            <p className='shrink-0'>{e.description['ko-KR']}</p>
+                            <Image
+                              src={dogFootPrint}
+                              width={25}
+                              height={25}
+                              alt='dogFootPrint'
+                              className='pr-1'
+                            />
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div
+                            style={{ width: `${width}` }}
+                            className='h-[25px] pl-1 bg-[#B48282] flex items-center'
+                            key={i}
+                          >
+                            <p className='shrink-0'>{e.description['ko-KR']}</p>
+                          </div>
+                        );
                       }
                     })
-                  : router.replace('/')}
+                ) : (
+                  <div>데이터 없음</div>
+                )}
               </div>
               <div className='flex flex-col pt-2'>
                 <div className='flex items-center space-x-5'>

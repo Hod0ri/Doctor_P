@@ -5,12 +5,18 @@ import Image from 'next/image';
 import drPET_Logo from '@/app/public/images/DrPET_Logo.svg';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-axios.defaults.baseURL = 'http://158.247.250.204:8080';
+// axios.defaults.baseURL = 'http://158.247.250.204:8080';
+axios.defaults.baseURL = 'http://158.247.222.166:8080';
+
+interface Disease {
+  name: string;
+  description: { 'ko-KR': string };
+}
 
 const Page = () => {
   const router = useRouter();
   const [petCategory, setPetCategory] = useState('dog');
-  const [diseaseList, setDiseaseList] = useState();
+  const [diseaseList, setDiseaseList] = useState<Disease[] | null>(null);
 
   const getDiseaseListData = async () => {
     axios
@@ -80,7 +86,7 @@ const Page = () => {
           </thead>
           <tbody>
             {diseaseList &&
-              diseaseList.map((e: any, i: number) => {
+              diseaseList.map((e: Disease, i: number) => {
                 return (
                   <tr
                     className='text-center border-b border-slate-300 hover:cursor-pointer hover:bg-[#f7f2e6] hover:font-gaeguBold'

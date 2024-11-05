@@ -1,13 +1,28 @@
 // context/DataContext.tsx
 'use client';
-import { createContext, useContext, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 
 interface ImageContextType {
   imageData: string | null;
   setImageData: (imageData: string | null) => void;
 }
+interface DataContextType {
+  data: object | null;
+  setData: Dispatch<SetStateAction<object | null>>;
+}
+const defaultValue: DataContextType = {
+  data: null,
+  setData: () => {}, // 기본값으로 빈 함수
+};
 
-const DataContext = createContext(null);
+// 타입 명시 추가
+const DataContext = createContext<DataContextType | null>(defaultValue);
 const ImageContext = createContext<ImageContextType | undefined>(undefined);
 
 export const useImageContext = () => {
@@ -18,8 +33,8 @@ export const useImageContext = () => {
   return context;
 };
 
-export function DataProvider({ children }) {
-  const [data, setData] = useState(null);
+export function DataProvider({ children }: { children: React.ReactNode }) {
+  const [data, setData] = useState<object | null>(null);
   const [imageData, setImageData] = useState<string | null>(null);
 
   return (
@@ -32,5 +47,9 @@ export function DataProvider({ children }) {
 }
 
 export function useData() {
-  return useContext(DataContext);
+  const context = useContext(DataContext);
+  if (context === null) {
+    throw new Error('useData must be used within a DataProvider');
+  }
+  return context;
 }
